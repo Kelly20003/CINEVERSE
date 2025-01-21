@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <link rel="stylesheet" href="filme.css">
+<head>
+    <meta charset="UTF-8">
+    <title>CINEVERSE</title>
+</head>
+<body>
+    <h1>CINEVERSE</h1>
+    
+    <iframe id="youtube-frame" width="960" height="615"  
+            src="" title="YouTube video player" frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; 
+            gyroscope; picture-in-picture" allowfullscreen>
+    </iframe>
+
+    <script>
+        // Lê o parâmetro da URL
+        const params = new URLSearchParams(window.location.search);
+        const videoId = params.get('videoId');
+        
+        if (videoId) {
+            const youtubeFrame = document.getElementById('youtube-frame');
+            youtubeFrame.src = `https://www.youtube.com/embed/${videoId}`;
+        } else {
+            alert('Nenhum vídeo foi selecionado.');
+        }
+    </script>
+</body>
+</html>

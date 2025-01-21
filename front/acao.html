@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filmes de Ação</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+        body {  
+        background: linear-gradient(#4f46e5, #000);
+        font-family: 'Poppins', sans-serif;
+        margin: 0;
+        padding: 0;
+        color: white; /* Cor do texto */
+        min-height: 100vh; /* Garante que o corpo ocupe pelo menos toda a altura da tela */
+        display: flex;
+        flex-direction: column;
+        
+        }
+        .movie-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center; /* Centraliza os filmes na tela */
+            padding: 20px;
+        }
+        
+        .movie-title {
+            height: 250px; /* Altura fixa para cada item */
+            width: 180px; /* Largura fixa para cada item */
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: inline-block;
+            text-align: center;
+            max-width: 200px;
+            overflow: hidden; /* Garante que nada saia dos limites definidos */
+            border-radius: 8px; /* Bordas arredondadas */
+        }
+        
+        .movie-title img {
+            width: 100%; /* Faz com que a imagem ocupe toda a largura do item */
+            height: 100%; /* Faz com que a imagem ocupe toda a altura do item */
+            object-fit: cover; /* Garante que a imagem cubra a área inteira sem distorção */
+            border-radius: 8px; /* Bordas arredondadas para as imagens também */
+        }
+        
+        .movie-title div {
+            color: white;
+            font-size: 14px;
+            margin-top: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        
+        h1 {
+            text-align: center;
+            font-size: 2em;
+            margin: 20px 0;
+        }
+        
+    </style>
+</head>
+<body>
+    <h1>Filmes de Ação</h1>
+    <div id="movie-list" class="movie-list"></div>
+
+    <script>
+        async function generateButtons() {
+            try {
+                const apiUrl = "http://localhost:3000/filmes";
+                const response = await fetch(apiUrl);
+
+                if (!response.ok) {
+                    throw new Error(`Erro ao buscar dados: ${ response.statusText }`);
+                }
+
+                const filmes = await response.json();
+                
+                // Filtra os filmes para garantir que apenas os de gênero "Ação" sejam mostrados
+                const filmesDeAcao = filmes.filter(filme => filme.genere.toLowerCase() === 'ação');
+
+                // Selecionar o contêiner onde os botões serão adicionados
+                const container = document.getElementById("movie-list");
+
+                // Iterar sobre os filmes de ação e criar os botões
+                filmesDeAcao.forEach(filme => {
+                    const button = document.createElement("button");
+                    button.classList.add("movie-title");
+
+                    const img = document.createElement("img");
+                    img.src = filme.img; // Imagem do filme
+                    img.alt = filme.title; // Texto alternativo com o título do filme
+
+                    const title = document.createElement("div");
+                    title.textContent = filme.title; // Título do filme
+
+                    button.appendChild(img);
+                    button.appendChild(title);
+                    button.setAttribute("data-id", filme._id);
+
+                    button.onclick = async () => {
+                        const movieId = button.getAttribute('data-id');
+                        try {
+                            const response = await fetch(`http://localhost:3000/filmes/${movieId}`);
+                            if (!response.ok) {
+                                throw new Error('Erro ao buscar informações do filme');
+                            }
+                            const movieData = await response.json();
+                            watchMovie(movieData);
+                        } catch (error) {
+                            console.error('Erro ao carregar as informações do filme:', error);
+                            alert('Erro ao carregar as informações do filme. Tente novamente.');
+                        }
+                    };
+
+                    container.appendChild(button); // Adicionar o botão no contêiner
+                });
+
+                // Se não houver filmes de Ação
+                if (filmesDeAcao.length === 0) {
+                    const li = document.createElement('div');
+                    li.textContent = 'Nenhum filme de ação encontrado.';
+                    container.appendChild(li);
+                }
+            } catch (error) {
+                console.error("Erro:", error);
+            }
+        }
+
+        // Função para assistir ao filme
+        function watchMovie(movieData) {
+            openVideoPage(movieData.videoPath);
+        }
+
+        // Função para abrir a página do filme
+        function openVideoPage(videoPath) {
+            window.location.href = `filme.html?videoId=${videoPath}`;
+        }
+
+        // Chama a função ao carregar a página
+        generateButtons();
+    </script>
+</body>
+</html>
