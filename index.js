@@ -63,7 +63,7 @@ app.post("/filmes", async (req, res) => {
     }
 });
 
-mongoose.connect("mongodb+srv://kellyantunes04:UGWUGmA8oXpfPmSx@cluster0.et7h2.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log('Banco de dados conectado'))
     .catch(err => console.error('Erro ao conectar ao banco de dados:', err));
 
