@@ -68,7 +68,7 @@
     <script>
         async function generateButtons() {
             try {
-                const apiUrl = "http://localhost:3000/filmes";
+                const apiUrl = "cineverse-production.up.railway.app/filmes";
                 const response = await fetch(apiUrl);
 
                 if (!response.ok) {
@@ -102,7 +102,7 @@
                     button.onclick = async () => {
                         const movieId = button.getAttribute('data-id');
                         try {
-                            const response = await fetch(`http://localhost:3000/filmes/${movieId}`);
+                            const response = await fetch(`cineverse-production.up.railway.app/filmes/${movieId}`);
                             if (!response.ok) {
                                 throw new Error('Erro ao buscar informações do filme');
                             }
