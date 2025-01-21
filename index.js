@@ -65,6 +65,6 @@ app.post("/filmes", async (req, res) => {
 
 mongoose.connect("mongodb+srv://kellyantunes04:UGWUGmA8oXpfPmSx@cluster0.et7h2.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
     .then(() => console.log('Banco de dados conectado'))
-    .catch(() => console.log('Deu errado'))
+    .catch(err => console.error('Erro ao conectar ao banco de dados:', err));
 
 app.listen(3000);
