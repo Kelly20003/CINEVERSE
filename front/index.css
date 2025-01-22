@@ -116,19 +116,7 @@ main {
     padding: 12px;
 }
 
-#logout_btn {
-    border: none;
-    padding: 12px;
-    font-size: 14px;
-    display: flex;
-    gap: 20px;
-    align-items: center;
-    border-radius: 8px;
-    text-align: start;
-    cursor: pointer;
-    background-color: transparent;
-    background-color: #4f46e5;
-}
+
 
 #open_btn {
     position: absolute;
@@ -199,19 +187,15 @@ main {
     right: 205vh;
     top: 60vh;
     margin-bottom: 5px;
-    gap: 2vh;
+    gap: 2px;
     align-items: center;
     justify-content: center;
     padding: 0;
     border: none;
     background: none; /* Remove estilos padrões de botão */
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
-   
     
 }
-
-
 
 
 .movie-title img {
@@ -221,5 +205,107 @@ main {
     width: 180px;
     display: block;
     border-radius: 4px;
+}
+
+
+/* Base style for grid layout */
+
+
+/* Large screens (above 1200px) */
+
+
+@media (max-width: 1280px) {
+    #sidebar {
+        width: 20px;
+        height: 100%;
+        position: fixed;
+    }
+    #sidebar.open-sidebar {
+        min-width: 50%;
+    }
+
+    #sidebar.open-sidebar .item-description {
+        width: 100%;
+    }
+    .movie-list {
+        top: 28%;
+        margin-left: 140%;
+        gap: 10px;
+        grid-template-columns: repeat(5, 1fr); /* 1 column for very small devices */
+        
+    }
+
+    .movie-title img {
+        height: 200px;
+        width: 140px;
+    }
+
+    .featured-video video {
+        left: 30px;
+        width: 1000px;
+    }
+
+
+
+
+/* Small screens (mobile, between 480px and 768px) */
+
+
+@media (max-width: 700px) {
+
+    .movie-list {
+        right:343%;
+    }
+   
+    
+}
+
+@media (max-width: 800px) {
+    #sidebar {
+        width: 20px;
+        position: fixed;
+    }
+    #sidebar.open-sidebar {
+        min-width: 50%;
+    }
+
+    #sidebar.open-sidebar .item-description {
+        width: 100%;
+    }
+
+    .movie-list {
+        position: relative;
+        justify-content: space-between;
+        gap: 10px; /* Menor espaçamento para telas menores */
+    }
+    .movie-title img {
+        width: 100%; /* Ajusta o tamanho das imagens */
+        height: auto;
+    }
+
+    .featured-video video {
+        right: 70px;
+        height: 300px;
+        width: 400px;
+    }
+
+    main {
+        padding-left: calc(60px + 20px);
+    }
+}
+}
+
+@media (max-width: 480px) {
+    .movie-list {
+        top: 15%;
+        margin-left: 273%;
+        grid-template-columns: repeat(3, 1fr); /* 1 column for very small devices */
+        
+    }
+
+    .movie-title img {
+        height: 140px;
+        width: 90px;
+    }
 }
 
