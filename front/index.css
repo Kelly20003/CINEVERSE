@@ -166,7 +166,7 @@ main {
 .featured-video video {
     position: relative;
     margin-left: -3%;
-    width: 1479px; /* Define a largura desejada */
+    width: 1302px; /* Define a largura desejada */
     height: 400px; /* Mantém a proporção do vídeo */
     border-radius: 0px;
     object-fit: cover; /* Remove as bordas ajustando o vídeo ao contêiner */
@@ -184,15 +184,16 @@ main {
 
 .movie-list {
     position: relative;
-    right: 205vh;
-    top: 60vh;
+    right: 210vh;
+    top: 65vh;
     margin-bottom: 5px;
-    gap: 2px;
+    gap: 10px;
     align-items: center;
     justify-content: center;
     padding: 0;
     border: none;
     background: none; /* Remove estilos padrões de botão */
+    grid-template-columns: repeat(6, 1fr);
     display: grid;
     
 }
@@ -204,21 +205,30 @@ main {
     height: 250px;
     width: 180px;
     display: block;
-    border-radius: 4px;
+    
 }
 
 
-@media (min-width: 1104px) {
+@media (max-width: 1150px) {
     
 
     .movie-list {
-    right: 100px;
+        top: 28%;
+        margin-left: 140%;
+        gap: 10px;
+        grid-template-columns: repeat(5, 1fr); /* 1 column for very small devices */
+        
     }
-    
+
+    .movie-title img {
+        height: 200px;
+        width: 140px;
+    }
+
     .featured-video video {
-        right: 200px;
-        height: 500px;
-        width: 400px;
+        left: 30px;
+        width: 2000px;
+        height: auto;
     }
 }
 
@@ -238,7 +248,7 @@ main {
     }
     .movie-list {
         top: 28%;
-        margin-left: 140%;
+        margin-left: 145%;
         gap: 10px;
         grid-template-columns: repeat(5, 1fr); /* 1 column for very small devices */
         
@@ -263,7 +273,7 @@ main {
 @media (max-width: 700px) {
 
     .movie-list {
-        right:343%;
+        right:345%;
     }
 
     
