@@ -5,6 +5,7 @@ import cors from 'cors';
 
 
 import Filmes from './models/filmes.js';  // Importa o modelo de filmes
+import Visitas from './models/visitas.js';
 
 const app = express();
 const port = 3000;
@@ -63,31 +64,22 @@ app.post("/filmes", async (req, res) => {
     }
 });
 
-// Rota para registrar a visita
-app.get("/registrar-visita", (req, res) => {
-    // Insere a data e hora atual
-    const queryInserir = "INSERT INTO visitas (data_hora) VALUES (NOW())";
-    db.query(queryInserir, (err) => {
-        if (err) {
-            console.error("Erro ao registrar visita:", err);
-            res.status(500).send("Erro ao registrar visita.");
-            return;
-        }
+// Rota para registrar uma visita
+app.get("/registrar-visita", async (req, res) => {
+    try {
+        // Cria um novo registro de visita com a data e hora atual
+        await Visitas.create({});
 
-        // Conta o total de visitas
-        const queryContar = "SELECT COUNT(*) AS total FROM visitas";
-        db.query(queryContar, (err, results) => {
-            if (err) {
-                console.error("Erro ao contar visitas:", err);
-                res.status(500).send("Erro ao contar visitas.");
-                return;
-            }
+        // Conta o total de visitas no banco de dados
+        const totalVisitas = await Visitas.countDocuments();
 
-            const totalVisitas = results[0].total;
-            res.json({ totalVisitas });
-        });
-    });
-});
+        // Retorna o total de visitas
+        res.json({ totalVisitas });
+    } catch (error) {
+        console.error("Erro ao registrar visita:", error);
+        res.status(500).json({ error: "Erro ao registrar visita." });
+    }
+})
 
 mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log('Banco de dados conectado'))
