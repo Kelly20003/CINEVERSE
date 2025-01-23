@@ -13,7 +13,7 @@ VisitaSchema.pre('validate', function (next) {
         this.data = now.toISOString().split('T')[0]; // Gera "YYYY-MM-DD"
     }
     if (!this.hora) {
-        this.hora = now.toTimeString().split(' ')[0]; // Gera "HH:mm:ss"
+        this.hora = now.toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' }).split(' ')[1];// Gera "HH:mm:ss"
     }
     next();
 });
