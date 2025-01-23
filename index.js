@@ -63,6 +63,32 @@ app.post("/filmes", async (req, res) => {
     }
 });
 
+// Rota para registrar a visita
+app.get("/registrar-visita", (req, res) => {
+    // Insere a data e hora atual
+    const queryInserir = "INSERT INTO visitas (data_hora) VALUES (NOW())";
+    db.query(queryInserir, (err) => {
+        if (err) {
+            console.error("Erro ao registrar visita:", err);
+            res.status(500).send("Erro ao registrar visita.");
+            return;
+        }
+
+        // Conta o total de visitas
+        const queryContar = "SELECT COUNT(*) AS total FROM visitas";
+        db.query(queryContar, (err, results) => {
+            if (err) {
+                console.error("Erro ao contar visitas:", err);
+                res.status(500).send("Erro ao contar visitas.");
+                return;
+            }
+
+            const totalVisitas = results[0].total;
+            res.json({ totalVisitas });
+        });
+    });
+});
+
 mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log('Banco de dados conectado'))
     .catch(err => console.error('Erro ao conectar ao banco de dados:', err, process.env.MONGO_URI));

@@ -8,6 +8,10 @@ const FilmeSchema = new mongoose.Schema({
     synopsis: String,
 });
 
-const Filmes = mongoose.model('Filmes', FilmeSchema);
-export default Filmes;
+const VisitaSchema = new mongoose.Schema({
+    dataHora: { type: Date, default: Date.now },
+});
 
+const Visitas = mongoose.model('Visitas', VisitaSchema);
+
+export default Visitas;
