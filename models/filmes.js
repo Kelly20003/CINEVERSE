@@ -8,3 +8,6 @@ const FilmeSchema = new mongoose.Schema({
     synopsis: String,
 });
 
+const Filmes = mongoose.model('Filmes', FilmeSchema);
+export default Filmes;
+
