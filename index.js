@@ -76,12 +76,12 @@ app.use(async (req, res, next) => {
     }
 });
 
-// Rota para retornar o total de visitas registradas
 app.get('/total-visitas', async (req, res) => {
     try {
         const totalVisitas = await Visitas.contarVisitas(); // Conta o total de visitas no banco
         res.json({ totalVisitas }); // Retorna o total como JSON
     } catch (error) {
+        console.error('Erro ao contar visitas:', error);
         res.status(500).json({ error: 'Erro ao contar visitas' });
     }
 });
