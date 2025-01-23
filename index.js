@@ -66,15 +66,27 @@ app.post("/filmes", async (req, res) => {
 
 app.use(async (req, res, next) => {
     try {
-        // Cria um novo registro de visita com data e hora atuais
-        await Visitas.create({});
+        const novaVisita = new Visitas(); // Cria uma nova visita
+        await novaVisita.save(); // Salva no banco de dados
         console.log('Visita registrada no banco.');
-        next(); // Passa a requisição para o próximo middleware ou rota
+        next(); // Continua para a próxima rota ou middleware
     } catch (error) {
         console.error('Erro ao registrar visita:', error);
-        next(error);  // Passa o erro para o próximo middleware de erro
+        next(error); // Passa o erro adiante
     }
 });
+
+// Rota para retornar o total de visitas registradas
+app.get('/total-visitas', async (req, res) => {
+    try {
+        const totalVisitas = await Visitas.contarVisitas(); // Conta o total de visitas no banco
+        res.json({ totalVisitas }); // Retorna o total como JSON
+    } catch (error) {
+        res.status(500).json({ error: 'Erro ao contar visitas' });
+    }
+});
+
+
 
 
 mongoose.connect(process.env.MONGO_URI)
