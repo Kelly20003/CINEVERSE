@@ -185,7 +185,7 @@
                 // Executa uma requisição GET para registrar a visita sempre que o site for carregado
         window.onload = async () => {
             try {
-                const response = await fetch('/registrar-visita');
+                const response = await fetch('https://cineverse-production.up.railway.app/registrar-visita');
                 const data = await response.json();
                 console.log('Visita registrada:', data);
             } catch (error) {
