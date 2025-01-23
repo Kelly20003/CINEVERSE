@@ -182,6 +182,17 @@
             console.log('Abrindo o filme com ID: ${ movieId }');
         }
 
+                // Executa uma requisição GET para registrar a visita sempre que o site for carregado
+        window.onload = async () => {
+            try {
+                const response = await fetch('/registrar-visita');
+                const data = await response.json();
+                console.log('Visita registrada:', data);
+            } catch (error) {
+                console.error('Erro ao registrar visita:', error);
+            }
+        };
+
     </script>
 
 

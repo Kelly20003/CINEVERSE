@@ -64,22 +64,18 @@ app.post("/filmes", async (req, res) => {
     }
 });
 
-// Rota para registrar uma visita
-app.get("/registrar-visita", async (req, res) => {
+app.use(async (req, res, next) => {
     try {
-        // Cria um novo registro de visita com a data e hora atual
+        // Cria um novo registro de visita com data e hora atuais
         await Visitas.create({});
-
-        // Conta o total de visitas no banco de dados
-        const totalVisitas = await Visitas.countDocuments();
-
-        // Retorna o total de visitas
-        res.json({ totalVisitas });
+        console.log('Visita registrada no banco.');
+        next(); // Passa a requisição para o próximo middleware ou rota
     } catch (error) {
-        console.error("Erro ao registrar visita:", error);
-        res.status(500).json({ error: "Erro ao registrar visita." });
+        console.error('Erro ao registrar visita:', error);
+        next(error);  // Passa o erro para o próximo middleware de erro
     }
-})
+});
+
 
 mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log('Banco de dados conectado'))
