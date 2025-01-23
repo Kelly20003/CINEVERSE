@@ -184,25 +184,20 @@
             console.log('Abrindo o filme com ID: ${ movieId }');
         }
 
-                // Executa uma requisição GET para registrar a visita sempre que o site for carregado
-                window.onload = async () => {
-                    try {
-                        // Faz uma requisição para registrar a visita
-                        const responseRegistrar = await fetch('https://cineverse-production.up.railway.app/registrar-visita');
-                        const dataRegistrar = await responseRegistrar.json();
-                        console.log('Visita registrada:', dataRegistrar);
+        // Executa uma requisição GET para registrar a visita sempre que o site for carregado
+        window.onload = async () => {
+        try {
+                // Faz uma requisição para buscar o total de visitas
+                const responseTotal = await fetch('https://cineverse-production.up.railway.app/total-visitas');
+                const dataTotal = await responseTotal.json();
                 
-                        // Faz uma requisição para buscar o total de visitas
-                        const responseTotal = await fetch('https://cineverse-production.up.railway.app/total-visitas');
-                        const dataTotal = await responseTotal.json();
-                
-                        // Atualiza o conteúdo do elemento na página
-                        const visitasElement = document.getElementById('total-visitas');
-                        visitasElement.textContent = dataTotal.totalVisitas;
-                    } catch (error) {
-                        console.error('Erro ao registrar visita ou carregar o total de visitas:', error);
-                    }
-                };
+                // Atualiza o conteúdo do elemento na página
+                const visitasElement = document.getElementById('total-visitas');
+                visitasElement.textContent = dataTotal.totalVisitas;
+            } catch (error) {
+                console.error('Erro ao registrar visita ou carregar o total de visitas:', error);
+            }
+        };
                 
 
     </script>

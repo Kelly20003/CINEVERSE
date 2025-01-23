@@ -86,9 +86,6 @@ app.get('/total-visitas', async (req, res) => {
     }
 });
 
-
-
-
 mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log('Banco de dados conectado'))
     .catch(err => console.error('Erro ao conectar ao banco de dados:', err, process.env.MONGO_URI));
